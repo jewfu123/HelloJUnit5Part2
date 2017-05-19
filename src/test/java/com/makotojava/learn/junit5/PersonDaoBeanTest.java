@@ -189,10 +189,10 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
 
     @Test
     @DisplayName("Update existing Person should succeed")
-    public void update() {
+    @ExtendWith(RandomExistingPersonParameterResolver.class)
+    public void update(Person person) {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null.");
-      Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-      person.setId(1L);
+      // Update using Random Person returned by Class-level ParameterResolver
       boolean updateSucceeded = classUnderTest.update(person);
       assertTrue(updateSucceeded);
     }
