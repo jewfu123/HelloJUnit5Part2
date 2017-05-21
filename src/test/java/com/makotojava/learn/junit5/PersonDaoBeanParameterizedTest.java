@@ -32,6 +32,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.runner.JUnitPlatform;
@@ -93,7 +94,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
   }
 
   @ParameterizedTest(name = "FindById(): Test# {index}: Person.toString() -> {0}")
-  @DisplayName("Parameterized Test: Find by ID")
+  @DisplayName("FindById using @MethodSource")
   @MethodSource(names = "personProvider")
   public void findById(Person paramPerson) {
     assertNotNull(classUnderTest);
@@ -110,7 +111,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Parameterized Test: Update()")
+  @DisplayName("Update using @MethodSource")
   @MethodSource(names = "personProvider")
   public void update(Person paramPerson) {
     assertNotNull(classUnderTest);
@@ -123,7 +124,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Parameterized Test: Delete()")
+  @DisplayName("Delete using @MethodSource")
   @MethodSource(names = "personProvider")
   public void delete(Person paramPerson) {
     assertNotNull(classUnderTest);
@@ -133,7 +134,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
   }
 
   @ParameterizedTest(name = "FindById(): Test# {index}: Id: {0}")
-  @DisplayName("FindById")
+  @DisplayName("FindById using @ValueSource")
   @ValueSource(longs = { 1L, 2L, 3L, 4L, 5L })
   public void findById(Long id) {
     assertNotNull(classUnderTest);
@@ -143,7 +144,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
   }
 
   @ParameterizedTest(name = "FindAllByLastName(): Test# {index}: LastName = {0}")
-  @DisplayName("FindAllByLastName")
+  @DisplayName("FindAllByLastName using @ValueSource")
   @ValueSource(strings = { "Wragdhen", "Jaxl", "Kath", "Yagnag", "Ugzor" })
   public void findAllByLastName(String lastName) {
     assertNotNull(classUnderTest);
@@ -153,6 +154,18 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
         () -> assertFalse(peopleFound.isEmpty()),
         () -> assertEquals(1, peopleFound.size()),
         () -> assertEquals(lastName, peopleFound.get(0).getLastName()));
+  }
+
+  @ParameterizedTest(name = "FindAllById(): Test# {index}: PersonTestEnum -> {0}")
+  @DisplayName("FindById using @EnumSource")
+  @EnumSource(PersonTestEnum.class)
+  public void findById_EnumSource(PersonTestEnum testPerson) {
+    assertNotNull(classUnderTest);
+    Person person = testPerson.getPerson();
+    Person personFound = classUnderTest.findById(person.getId());
+    assertNotNull(personFound);
+    performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),
+        person.getGender(), personFound);
   }
 
 }
