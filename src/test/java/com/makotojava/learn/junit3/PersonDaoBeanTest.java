@@ -80,7 +80,7 @@ public class PersonDaoBeanTest extends TestCase {
     ctx = new AnnotationConfigApplicationContext(TestSpringConfigurationEmptyDb.class);
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     boolean updateSucceeded = classUnderTest.update(person);
     assertFalse(updateSucceeded);
 
@@ -90,7 +90,7 @@ public class PersonDaoBeanTest extends TestCase {
     ctx = new AnnotationConfigApplicationContext(TestSpringConfigurationEmptyDb.class);
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     Person personDeleted = classUnderTest.delete(person);
     assertNull(personDeleted);
   }
@@ -147,7 +147,7 @@ public class PersonDaoBeanTest extends TestCase {
   public void testUpdate() {
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     boolean updateSucceeded = classUnderTest.update(person);
     assertTrue(updateSucceeded);
   }
@@ -155,7 +155,7 @@ public class PersonDaoBeanTest extends TestCase {
   public void testDelete() {
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     Person personDeleted = classUnderTest.delete(person);
     assertNotNull(personDeleted);
     performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),

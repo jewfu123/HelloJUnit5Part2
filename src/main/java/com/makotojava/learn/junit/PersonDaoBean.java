@@ -167,7 +167,7 @@ public class PersonDaoBean implements PersonDao {
     @Override
     public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
       Person ret = new Person();
-      ret.setId(rs.getLong("id"));
+      ret.withId(rs.getLong("id"));
       ret.setAge(rs.getInt("age"));
       ret.setEyeColor(rs.getString("eye_color"));
       ret.setGender(rs.getString("gender"));

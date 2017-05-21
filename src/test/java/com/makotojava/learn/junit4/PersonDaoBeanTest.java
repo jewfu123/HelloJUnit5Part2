@@ -90,7 +90,7 @@ public class PersonDaoBeanTest {
     ctx = new AnnotationConfigApplicationContext(TestSpringConfigurationEmptyDb.class);
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     boolean updateSucceeded = classUnderTest.update(person);
     assertFalse(updateSucceeded);
 
@@ -101,7 +101,7 @@ public class PersonDaoBeanTest {
     ctx = new AnnotationConfigApplicationContext(TestSpringConfigurationEmptyDb.class);
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     Person personDeleted = classUnderTest.delete(person);
     assertNull(personDeleted);
   }
@@ -163,7 +163,7 @@ public class PersonDaoBeanTest {
   public void update() {
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     boolean updateSucceeded = classUnderTest.update(person);
     assertTrue(updateSucceeded);
   }
@@ -174,7 +174,7 @@ public class PersonDaoBeanTest {
     // This Person is actually ID 2, but try and update it as ID 1. The result is
     /// a duplicate, which should fail.
     Person person = new Person("Jaxl", "Lar", 21, PersonGenerator.BROWN, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     boolean updateSucceeded = classUnderTest.update(person);
     assertFalse(updateSucceeded);
   }
@@ -183,7 +183,7 @@ public class PersonDaoBeanTest {
   public void delete() {
     assertNotNull(classUnderTest);
     Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-    person.setId(1L);
+    person.withId(1L);
     Person personDeleted = classUnderTest.delete(person);
     assertNotNull(personDeleted);
     performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),

@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DynamicTest;
@@ -44,6 +45,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import com.makotojava.learn.junit.Person;
 import com.makotojava.learn.junit.PersonDaoBean;
 import com.makotojava.learn.junit.PersonGenerator;
+import com.makotojava.learn.junit.PersonTestEnum;
 import com.makotojava.learn.junit.TestSpringConfiguration;
 import com.makotojava.learn.junit.TestSpringConfigurationEmptyDb;
 
@@ -58,6 +60,11 @@ import com.makotojava.learn.junit.TestSpringConfigurationEmptyDb;
 @DisplayName("Testing PersonDaoBean")
 @ExtendWith(JUnit5ExtensionShowcase.class)
 public class PersonDaoBeanTest extends AbstractBaseTest {
+
+  @BeforeAll
+  public static void init() {
+    PersonTestEnum.generateInsertSql();
+  }
 
   @Nested
   @DisplayName("When Database is populated with objects")
@@ -93,7 +100,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     }
 
     @Test
-    @DisplayName("Find Objects by ID")
+    @DisplayName("FindById - Old School")
     public void findById() {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null.");
       assertAll("Assert found objects by IDs 1-5",
@@ -137,8 +144,9 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
         Person person = classUnderTest.findById(id);
         assertNotNull(person);
         int index = id.intValue() - 1;
-        performPersonAssertions(TEST_PEOPLE[index].getLastName(), TEST_PEOPLE[index].getFirstName(),
-            TEST_PEOPLE[index].getAge(), TEST_PEOPLE[index].getEyeColor(), TEST_PEOPLE[index].getGender(), person);
+        Person testPerson = PersonTestEnum.values()[index].getPerson();
+        performPersonAssertions(testPerson.getLastName(), testPerson.getFirstName(),
+            testPerson.getAge(), testPerson.getEyeColor(), testPerson.getGender(), person);
       }));
     }
 
@@ -204,7 +212,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
       // This Person is actually ID 2, but try and update it as ID 1. The result is
       /// a duplicate, which should fail.
       Person person = new Person("Jaxl", "Lar", 21, PersonGenerator.BROWN, PersonGenerator.MALE);
-      person.setId(1L);
+      person.withId(1L);
       boolean updateSucceeded = classUnderTest.update(person);
       assertFalse(updateSucceeded);
     }
@@ -214,7 +222,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     public void delete() {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null.");
       Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-      person.setId(1L);
+      person.withId(1L);
       Person personDeleted = classUnderTest.delete(person);
       assertNotNull(personDeleted);
       performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),
@@ -261,7 +269,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     public void update_WithEmptyDatabase() {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null.");
       Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-      person.setId(1L);
+      person.withId(1L);
       boolean updateSucceeded = classUnderTest.update(person);
       assertFalse(updateSucceeded, "Update succeeded but should have failed.");
 
@@ -272,7 +280,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     public void delete_WithEmptyDatabase() {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null!");
       Person person = new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE);
-      person.setId(1L);
+      person.withId(1L);
       Person personDeleted = classUnderTest.delete(person);
       assertNull(personDeleted, "Delete succeeded but should have failed.");
     }

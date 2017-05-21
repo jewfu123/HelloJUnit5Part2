@@ -76,7 +76,7 @@ public class PersonDaoBeanParameterizedTest {
     };
     // Objects need an ID or they cannot be updated in the DB
     for (int aa = 0; aa < people.length; aa++) {
-      people[aa].setId((long) aa + 1);
+      people[aa].withId((long) aa + 1);
     }
     return Arrays.asList(people);
   }
@@ -104,7 +104,7 @@ public class PersonDaoBeanParameterizedTest {
     Person personToUpdate = new Person(paramPerson.getLastName(), paramPerson.getFirstName(),
         paramPerson.getAge() + 10,// Modify age
         paramPerson.getEyeColor(), paramPerson.getGender());
-    personToUpdate.setId(paramPerson.getId());
+    personToUpdate.withId(paramPerson.getId());
     boolean updateSucceeded = classUnderTest.update(personToUpdate);
     assertTrue(updateSucceeded);
   }

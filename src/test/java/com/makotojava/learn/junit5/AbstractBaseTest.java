@@ -23,7 +23,6 @@ import org.junit.platform.runner.JUnitPlatform;
 import org.junit.runner.RunWith;
 
 import com.makotojava.learn.junit.Person;
-import com.makotojava.learn.junit.PersonGenerator;
 
 /**
  * Common functionality and other constructs that are shared by
@@ -37,14 +36,6 @@ import com.makotojava.learn.junit.PersonGenerator;
  */
 @RunWith(JUnitPlatform.class)
 public abstract class AbstractBaseTest {
-
-  public static final Person[] TEST_PEOPLE = new Person[] {
-      new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE),
-      new Person("Jaxl", "Lar", 21, PersonGenerator.BROWN, PersonGenerator.MALE),
-      new Person("Kath", "Fon", 35, PersonGenerator.GOLD, PersonGenerator.FEMALE),
-      new Person("Yagnag", "Mog", 18, PersonGenerator.BROWN, PersonGenerator.FEMALE),
-      new Person("Ugzor", "Sar", 11, PersonGenerator.HAZEL, PersonGenerator.UNKNOWN),
-  };
 
   public static void performPersonAssertions(String lastName, String firstName, int age, String eyeColor, String gender,
       Person person) {

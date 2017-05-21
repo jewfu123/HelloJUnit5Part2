@@ -50,7 +50,7 @@ public class Person {
     return id;
   }
 
-  public Person setId(Long id) {
+  public Person withId(Long id) {
     this.id = id;
     // Fluent
     return this;

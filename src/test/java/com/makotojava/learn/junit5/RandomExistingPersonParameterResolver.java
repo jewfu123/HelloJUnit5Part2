@@ -24,6 +24,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
 import com.makotojava.learn.junit.Person;
+import com.makotojava.learn.junit.PersonTestEnum;
 
 /**
  * Returns a Random Person object from the ones that are pre-defined to
@@ -47,9 +48,9 @@ public class RandomExistingPersonParameterResolver implements ParameterResolver 
     // Random number generator
     Random random = new Random();
     int randomIndex = random.nextInt(5);// New random int between 0 - 5
-    ret = AbstractBaseTest.TEST_PEOPLE[randomIndex];
+    ret = PersonTestEnum.values()[randomIndex].getPerson();
     // The index is the same as the ID in the DB
-    ret.setId((long) randomIndex + 1);
+    ret.withId((long) randomIndex + 1);
     // Return that Person object
     return ret;
   }
