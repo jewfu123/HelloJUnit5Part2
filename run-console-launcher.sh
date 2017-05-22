@@ -19,7 +19,7 @@ echo DEPENDENT_JAR_CLASSPATH=${DEPENDENT_JAR_CLASSPATH}
 TEST_CLASSES_ROOT=./target/classes:./target/test-classes/
 echo TEST_CLASSES_ROOT=${TEST_CLASSES_ROOT}
 #
-EXCLUDE_TAGS='--exclude-tag advanced --exclude-tag someothertag'
+#EXCLUDE_TAGS='--exclude-tag advanced --exclude-tag someothertag'
 #
 echo Starting console launcher...
 echo ""
