@@ -44,7 +44,7 @@ junitPlatform {
     }
     tags {
       // include 'fast'
-      //exclude 'advanced'
+      exclude 'advanced'
     }
     // includeClassNamePattern '.*Test'
   }

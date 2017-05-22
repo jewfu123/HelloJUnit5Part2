@@ -24,6 +24,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -35,6 +37,7 @@ import com.makotojava.learn.junit.TestSpringConfigurationEmptyDb;
 
 @Advanced
 @DisplayName("Testing PersonDaoBean using Repeated Tests")
+@RunWith(JUnitPlatform.class)
 /**
  * Repeated Test for testing PersonDaoBean.
  * 

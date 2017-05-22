@@ -19,9 +19,6 @@ package com.makotojava.learn.junit5;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
-
 import com.makotojava.learn.junit.Person;
 
 /**
@@ -34,7 +31,6 @@ import com.makotojava.learn.junit.Person;
  * @author J Steven Perry
  *
  */
-@RunWith(JUnitPlatform.class)
 public abstract class AbstractBaseTest {
 
   public static void performPersonAssertions(String lastName, String firstName, int age, String eyeColor, String gender,

@@ -31,6 +31,7 @@ import javax.sql.DataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -77,14 +78,12 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
 
   /**
    * Provides Person iterator, works with the
-   * 
-   * @MethodSource based methods.
+   * MethodSource based methods.
    * 
    * @return Iterator<Person> - the Iterator that contains Person
    *         instances for parameterized methods.
    */
   static Iterator<Person> personProvider() {
-    // Objects need an ID or they cannot be updated in the DB
     PersonTestEnum[] testPeople = PersonTestEnum.values();
     Person[] people = new Person[testPeople.length];
     for (int aa = 0; aa < testPeople.length; aa++) {
@@ -93,9 +92,25 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
     return Arrays.asList(people).iterator();
   }
 
-  @ParameterizedTest(name = "FindById(): Test# {index}: Person.toString() -> {0}")
-  @DisplayName("FindById using @MethodSource")
-  @MethodSource(names = "personProvider")
+  /**
+   * Provides Person iterator, works with the MethodSource
+   * based methods.
+   * 
+   * @return Iterator<Person> - the Iterator that contains Person
+   *         instances from PersonTestEnum, in reverse order.
+   */
+  static Person[] personProvider2() {
+    PersonTestEnum[] testPeople = PersonTestEnum.values();
+    Person[] people = new Person[testPeople.length];
+    for (int aa = 0, bb = testPeople.length - 1; aa < testPeople.length; aa++, bb--) {
+      people[aa] = testPeople[bb].getPerson();
+    }
+    return people;
+  }
+
+  @ParameterizedTest(name = "@MethodSource: FindById(): Test# {index}: Person.toString() -> {0}")
+  @DisplayName("FindById using MethodSource")
+  @MethodSource(names = { "personProvider", "personProvider2" })
   public void findById(Person paramPerson) {
     assertNotNull(classUnderTest);
     long id = paramPerson.getId();
@@ -104,14 +119,10 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
     performPersonAssertions(paramPerson.getLastName(), paramPerson.getFirstName(),
         paramPerson.getAge(),
         paramPerson.getEyeColor(), paramPerson.getGender(), personFound);
-    DataSource dataSource = (DataSource) ctx.getBean("dataSource");
-    if (dataSource instanceof EmbeddedDatabase) {
-      ((EmbeddedDatabase) dataSource).shutdown();
-    }
   }
 
-  @ParameterizedTest
-  @DisplayName("Update using @MethodSource")
+  @ParameterizedTest(name = "@MethodSource: update(): Test# {index}: Person.toString() -> {0}")
+  @DisplayName("Update using MethodSource")
   @MethodSource(names = "personProvider")
   public void update(Person paramPerson) {
     assertNotNull(classUnderTest);
@@ -123,8 +134,8 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
     assertTrue(updateSucceeded);
   }
 
-  @ParameterizedTest
-  @DisplayName("Delete using @MethodSource")
+  @ParameterizedTest(name = "@MethodSource: delete(): Test# {index}: Person.toString() -> {0}")
+  @DisplayName("Delete using MethodSource")
   @MethodSource(names = "personProvider")
   public void delete(Person paramPerson) {
     assertNotNull(classUnderTest);
@@ -133,39 +144,45 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
         paramPerson.getEyeColor(), paramPerson.getGender(), personDeleted);
   }
 
-  @ParameterizedTest(name = "FindById(): Test# {index}: Id: {0}")
-  @DisplayName("FindById using @ValueSource")
-  @ValueSource(longs = { 1L, 2L, 3L, 4L, 5L })
-  public void findById(Long id) {
-    assertNotNull(classUnderTest);
-    Person personFound = classUnderTest.findById(id);
-    assertNotNull(personFound);
-    assertEquals(id, personFound.getId());
-  }
+  @Nested
+  @DisplayName("When using @ValueSource and @EnumSource")
+  public class PersonDaoBeanTest {
 
-  @ParameterizedTest(name = "FindAllByLastName(): Test# {index}: LastName = {0}")
-  @DisplayName("FindAllByLastName using @ValueSource")
-  @ValueSource(strings = { "Wragdhen", "Jaxl", "Kath", "Yagnag", "Ugzor" })
-  public void findAllByLastName(String lastName) {
-    assertNotNull(classUnderTest);
-    List<Person> peopleFound = classUnderTest.findAllByLastName(lastName);
-    assertNotNull(peopleFound);
-    assertAll(
-        () -> assertFalse(peopleFound.isEmpty()),
-        () -> assertEquals(1, peopleFound.size()),
-        () -> assertEquals(lastName, peopleFound.get(0).getLastName()));
-  }
+    @ParameterizedTest(name = "@ValueSource: FindById(): Test# {index}: Id: {0}")
+    @DisplayName("FindById using ValueSource")
+    @ValueSource(longs = { 1L, 2L, 3L, 4L, 5L })
+    public void findById(Long id) {
+      assertNotNull(classUnderTest);
+      Person personFound = classUnderTest.findById(id);
+      assertNotNull(personFound);
+      assertEquals(id, personFound.getId());
+    }
 
-  @ParameterizedTest(name = "FindAllById(): Test# {index}: PersonTestEnum -> {0}")
-  @DisplayName("FindById using @EnumSource")
-  @EnumSource(PersonTestEnum.class)
-  public void findById_EnumSource(PersonTestEnum testPerson) {
-    assertNotNull(classUnderTest);
-    Person person = testPerson.getPerson();
-    Person personFound = classUnderTest.findById(person.getId());
-    assertNotNull(personFound);
-    performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),
-        person.getGender(), personFound);
+    @ParameterizedTest(name = "@ValueSource: FindAllByLastName(): Test# {index}: LastName = {0}")
+    @DisplayName("FindAllByLastName using ValueSource")
+    @ValueSource(strings = { "Wragdhen", "Jaxl", "Kath", "Yagnag", "Ugzor" })
+    public void findAllByLastName(String lastName) {
+      assertNotNull(classUnderTest);
+      List<Person> peopleFound = classUnderTest.findAllByLastName(lastName);
+      assertNotNull(peopleFound);
+      assertAll(
+          () -> assertFalse(peopleFound.isEmpty()),
+          () -> assertEquals(1, peopleFound.size()),
+          () -> assertEquals(lastName, peopleFound.get(0).getLastName()));
+    }
+
+    @ParameterizedTest(name = "@EnumSource: FindById(): Test# {index}: PersonTestEnum -> {0}")
+    @DisplayName("FindById using EnumSource")
+    @EnumSource(PersonTestEnum.class)
+    public void findById(PersonTestEnum testPerson) {
+      assertNotNull(classUnderTest);
+      Person person = testPerson.getPerson();
+      Person personFound = classUnderTest.findById(person.getId());
+      assertNotNull(personFound);
+      performPersonAssertions(person.getLastName(), person.getFirstName(), person.getAge(), person.getEyeColor(),
+          person.getGender(), personFound);
+    }
+
   }
 
 }

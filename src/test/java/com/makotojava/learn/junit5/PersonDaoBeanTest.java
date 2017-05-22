@@ -38,6 +38,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -59,6 +61,7 @@ import com.makotojava.learn.junit.TestSpringConfigurationEmptyDb;
  */
 @DisplayName("Testing PersonDaoBean")
 @ExtendWith(JUnit5ExtensionShowcase.class)
+@RunWith(JUnitPlatform.class)
 public class PersonDaoBeanTest extends AbstractBaseTest {
 
   @BeforeAll

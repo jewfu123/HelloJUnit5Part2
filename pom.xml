@@ -40,8 +40,8 @@
 				<version>2.19</version>
 				<configuration>
 					<properties>
-						<!-- <includeTags>fast</includeTags>-->
-						<!-- <excludeTags>advanced</excludeTags>-->
+						<!-- <includeTags>fast</includeTags> -->
+						<excludeTags>advanced</excludeTags>
 					</properties>
 				</configuration>
 				<dependencies>
@@ -61,6 +61,23 @@
 						<version>${junit.vintage.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>test</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
