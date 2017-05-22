@@ -19,9 +19,12 @@ echo DEPENDENT_JAR_CLASSPATH=${DEPENDENT_JAR_CLASSPATH}
 TEST_CLASSES_ROOT=./target/classes:./target/test-classes/
 echo TEST_CLASSES_ROOT=${TEST_CLASSES_ROOT}
 #
+EXCLUDE_TAGS='--exclude-tag advanced --exclude-tag someothertag'
+#
 echo Starting console launcher...
 echo ""
 echo ""
 java -jar ${CONSOLE_LAUNCHER_JAR_ROOT}/${CONSOLE_LAUNCHER_JAR} \
 --scan-class-path \
---class-path ${TEST_CLASSES_ROOT}:${DEPENDENT_JAR_CLASSPATH}
+--class-path ${TEST_CLASSES_ROOT}:${DEPENDENT_JAR_CLASSPATH} \
+${EXCLUDE_TAGS}
