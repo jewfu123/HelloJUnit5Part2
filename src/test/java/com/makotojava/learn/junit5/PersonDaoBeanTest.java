@@ -99,7 +99,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
       assertAll("Returned list should not be null, empty, and must contain 5 objects",
           () -> assertNotNull(people),
           () -> assertFalse(people.isEmpty()),
-          () -> assertEquals(5, people.size()));
+          () -> assertEquals(PersonTestEnum.values().length, people.size()));
     }
 
     @Test
@@ -142,7 +142,7 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     @TestFactory
     @DisplayName("FindById - Dynamic Test Generator")
     Stream<DynamicTest> generateFindByIdDynamicTests() {
-      Long[] ids = { 1L, 2L, 3L, 4L, 5L };
+      Long[] ids = { 1L, 2L, 3L, 4L, 5L, 6L };
       return Stream.of(ids).map(id -> dynamicTest("DynamicTest: Find by ID " + id, () -> {
         Person person = classUnderTest.findById(id);
         assertNotNull(person);
@@ -204,7 +204,10 @@ public class PersonDaoBeanTest extends AbstractBaseTest {
     public void update(Person person) {
       assertNotNull(classUnderTest, "PersonDaoBean reference cannot be null.");
       // Update using Random Person returned by Class-level ParameterResolver
-      boolean updateSucceeded = classUnderTest.update(person);
+      // Add 10 years to the Person's age (hey, we need to update SOMETHING!)
+      Person personToUpdate = new Person(person.getLastName(), person.getFirstName(), person.getAge() + 10,
+          person.getEyeColor(), person.getGender()).withId(person.getId());
+      boolean updateSucceeded = classUnderTest.update(personToUpdate);
       assertTrue(updateSucceeded);
     }
 

@@ -50,7 +50,7 @@ junitPlatform {
   }
   // enableStandardTestTask true
   // reportsDir file('build/test-results/junit-platform') // this is the default
-  logManager 'org.apache.logging.log4j.jul.LogManager'
+  //logManager 'org.apache.logging.log4j.jul.LogManager'
 }
 
 dependencies {
@@ -85,3 +85,10 @@ task wrapper(type: Wrapper) {
   description = 'Generates gradlew[.bat] scripts'
   gradleVersion = '3.0'
 }
+
+task copyToLib(type: Copy) {
+  into "$buildDir/lib"
+  from configurations.runtime
+}
+
+build.dependsOn(copyToLib)

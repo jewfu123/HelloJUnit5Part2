@@ -36,8 +36,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
@@ -47,7 +45,7 @@ import com.makotojava.learn.junit.PersonDaoBean;
 import com.makotojava.learn.junit.PersonTestEnum;
 import com.makotojava.learn.junit.TestSpringConfiguration;
 
-@RunWith(JUnitPlatform.class)
+// @RunWith(JUnitPlatform.class)
 @DisplayName("Testing PersonDaoBean using parameterized test methods")
 @Advanced
 /**
@@ -84,12 +82,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
    *         instances for parameterized methods.
    */
   static Iterator<Person> personProvider() {
-    PersonTestEnum[] testPeople = PersonTestEnum.values();
-    Person[] people = new Person[testPeople.length];
-    for (int aa = 0; aa < testPeople.length; aa++) {
-      people[aa] = testPeople[aa].getPerson();
-    }
-    return Arrays.asList(people).iterator();
+    return Arrays.asList(PersonTestEnum.toPersonArray()).iterator();
   }
 
   /**
@@ -99,7 +92,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
    * @return Iterator<Person> - the Iterator that contains Person
    *         instances from PersonTestEnum, in reverse order.
    */
-  static Person[] personProvider2() {
+  static Person[] additionalPersonProvider() {
     PersonTestEnum[] testPeople = PersonTestEnum.values();
     Person[] people = new Person[testPeople.length];
     for (int aa = 0, bb = testPeople.length - 1; aa < testPeople.length; aa++, bb--) {
@@ -110,7 +103,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
 
   @ParameterizedTest(name = "@MethodSource: FindById(): Test# {index}: Person.toString() -> {0}")
   @DisplayName("FindById using MethodSource")
-  @MethodSource(names = { "personProvider", "personProvider2" })
+  @MethodSource(names = { "personProvider", "additionalPersonProvider" })
   public void findById(Person paramPerson) {
     assertNotNull(classUnderTest);
     long id = paramPerson.getId();

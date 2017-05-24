@@ -13,7 +13,8 @@ public enum PersonTestEnum {
   PERSON_2(2L, "Jaxl", "Lar", 21, PersonGenerator.BROWN, PersonGenerator.MALE),
   PERSON_3(3L, "Kath", "Fon", 35, PersonGenerator.GOLD, PersonGenerator.FEMALE),
   PERSON_4(4L, "Yagnag", "Mog", 18, PersonGenerator.BROWN, PersonGenerator.FEMALE),
-  PERSON_5(5L, "Ugzor", "Sar", 11, PersonGenerator.HAZEL, PersonGenerator.UNKNOWN);
+  PERSON_5(5L, "Ugzor", "Sar", 11, PersonGenerator.HAZEL, PersonGenerator.UNKNOWN),
+  PERSON_6(6L, "Naen", "Cain", 40, PersonGenerator.BLUE, PersonGenerator.FEMALE);
 
   private Person person;
 
@@ -23,6 +24,15 @@ public enum PersonTestEnum {
 
   PersonTestEnum(Long id, String lastName, String firstName, int age, String eyeColor, String gender) {
     this.person = new Person(lastName, firstName, age, eyeColor, gender).withId(id);
+  }
+
+  public static Person[] toPersonArray() {
+    Person[] ret = new Person[values().length];
+    int aa = 0;
+    for (PersonTestEnum value : values()) {
+      ret[aa++] = value.getPerson();
+    }
+    return ret;
   }
 
   public static String generateInsertSql() {

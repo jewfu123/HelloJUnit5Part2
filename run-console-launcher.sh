@@ -20,6 +20,11 @@ TEST_CLASSES_ROOT=./target/classes:./target/test-classes/
 echo TEST_CLASSES_ROOT=${TEST_CLASSES_ROOT}
 #
 #EXCLUDE_TAGS='--exclude-tag advanced --exclude-tag someothertag'
+echo EXCLUDE_TAGS=${EXCLUDE_TAGS}
+#
+echo Running Maven build to get things set up...
+# Skip tests... don't worry, we will be running them soon enough!
+mvn clean package -DskipTests
 #
 echo Starting console launcher...
 echo ""

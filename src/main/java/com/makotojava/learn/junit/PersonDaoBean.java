@@ -166,13 +166,13 @@ public class PersonDaoBean implements PersonDao {
 
     @Override
     public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-      Person ret = new Person();
-      ret.withId(rs.getLong("id"));
-      ret.setAge(rs.getInt("age"));
-      ret.setEyeColor(rs.getString("eye_color"));
-      ret.setGender(rs.getString("gender"));
-      ret.setLastName(rs.getString("last_name"));
-      ret.setFirstName(rs.getString("first_name"));
+      long id = rs.getLong("id");
+      int age = rs.getInt("age");
+      String eyeColor = rs.getString("eye_color");
+      String gender = rs.getString("gender");
+      String lastName = rs.getString("last_name");
+      String firstName = rs.getString("first_name");
+      Person ret = new Person(lastName, firstName, age, eyeColor, gender).withId(id);
       return ret;
     }
 

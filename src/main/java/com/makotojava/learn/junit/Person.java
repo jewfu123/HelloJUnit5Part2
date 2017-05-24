@@ -18,7 +18,7 @@ package com.makotojava.learn.junit;
 import java.util.Date;
 
 /**
- * Person class. Persistent.
+ * Person class. Persistent. Immutable.
  * 
  * @author J Steven Perry
  *
@@ -80,40 +80,20 @@ public class Person {
     return lastName;
   }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
-
   public String getFirstName() {
     return firstName;
-  }
-
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
   }
 
   public int getAge() {
     return age;
   }
 
-  public void setAge(int age) {
-    this.age = age;
-  }
-
   public String getEyeColor() {
     return eyeColor;
   }
 
-  public void setEyeColor(String eyeColor) {
-    this.eyeColor = eyeColor;
-  }
-
   public String getGender() {
     return gender;
-  }
-
-  public void setGender(String gender) {
-    this.gender = gender;
   }
 
   @Override

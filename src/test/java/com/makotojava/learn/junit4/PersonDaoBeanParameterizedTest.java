@@ -35,7 +35,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 
 import com.makotojava.learn.junit.Person;
 import com.makotojava.learn.junit.PersonDaoBean;
-import com.makotojava.learn.junit.PersonGenerator;
+import com.makotojava.learn.junit.PersonTestEnum;
 import com.makotojava.learn.junit.TestSpringConfiguration;
 
 /**
@@ -67,18 +67,7 @@ public class PersonDaoBeanParameterizedTest {
 
   @Parameters(name = "{index}: {0}")
   public static Collection<Person> parameters() {
-    Person[] people = new Person[] {
-        new Person("Wragdhen", "Zelx", 28, PersonGenerator.BLUE, PersonGenerator.MALE),
-        new Person("Jaxl", "Lar", 21, PersonGenerator.BROWN, PersonGenerator.MALE),
-        new Person("Kath", "Fon", 35, PersonGenerator.GOLD, PersonGenerator.FEMALE),
-        new Person("Yagnag", "Mog", 18, PersonGenerator.BROWN, PersonGenerator.FEMALE),
-        new Person("Ugzor", "Sar", 11, PersonGenerator.HAZEL, PersonGenerator.UNKNOWN),
-    };
-    // Objects need an ID or they cannot be updated in the DB
-    for (int aa = 0; aa < people.length; aa++) {
-      people[aa].withId((long) aa + 1);
-    }
-    return Arrays.asList(people);
+    return Arrays.asList(PersonTestEnum.toPersonArray());
   }
 
   private Person paramPerson;

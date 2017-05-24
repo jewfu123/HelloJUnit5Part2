@@ -47,7 +47,8 @@ public class RandomExistingPersonParameterResolver implements ParameterResolver 
     Person ret = null;
     // Random number generator
     Random random = new Random();
-    int randomIndex = random.nextInt(5);// New random int between 0 - 5
+    // Random int between 0 and the number of PersonTestEnum elements
+    int randomIndex = random.nextInt(PersonTestEnum.values().length);
     ret = PersonTestEnum.values()[randomIndex].getPerson();
     // The index is the same as the ID in the DB
     ret.withId((long) randomIndex + 1);

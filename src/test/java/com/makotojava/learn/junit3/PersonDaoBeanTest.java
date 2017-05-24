@@ -26,6 +26,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import com.makotojava.learn.junit.Person;
 import com.makotojava.learn.junit.PersonDaoBean;
 import com.makotojava.learn.junit.PersonGenerator;
+import com.makotojava.learn.junit.PersonTestEnum;
 import com.makotojava.learn.junit.TestSpringConfiguration;
 import com.makotojava.learn.junit.TestSpringConfigurationEmptyDb;
 
@@ -64,7 +65,7 @@ public class PersonDaoBeanTest extends TestCase {
     List<Person> people = classUnderTest.findAll();
     assertNotNull(people);
     assertFalse(people.isEmpty());
-    assertEquals(5, people.size());
+    assertEquals(PersonTestEnum.values().length, people.size());
   }
 
   public void testFindAll_WithEmptyDatabase() {
