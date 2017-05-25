@@ -4,7 +4,7 @@
 # dependencies change in the POM or build.gradle.
 #
 #
-CONSOLE_LAUNCHER_JAR_ROOT=./src/test/lib
+CONSOLE_LAUNCHER_JAR_ROOT=./target/lib
 echo CONSOLE_LAUNCHER_JAR_ROOT=${CONSOLE_LAUNCHER_JAR_ROOT}
 #
 CONSOLE_LAUNCHER_JAR=junit-platform-console-standalone-1.0.0-M4.jar
