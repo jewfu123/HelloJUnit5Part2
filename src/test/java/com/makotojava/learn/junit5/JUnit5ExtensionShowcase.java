@@ -23,13 +23,11 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
-import org.junit.jupiter.api.extension.ContainerExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
-import org.junit.jupiter.api.extension.TestExtensionContext;
 
 /**
  * Used to showcase the various callbacks used to extend Junit 5.
@@ -44,7 +42,7 @@ public class JUnit5ExtensionShowcase
   private static final Logger log = Logger.getLogger(JUnit5ExtensionShowcase.class);
 
   @Override
-  public boolean supports(ParameterContext parameterContext, ExtensionContext extensionContext)
+  public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     log.debug("supports(): parameterContext => " + ReflectionToStringBuilder.toString(parameterContext)
         + ", extensionContext => "
@@ -53,7 +51,7 @@ public class JUnit5ExtensionShowcase
   }
 
   @Override
-  public Object resolve(ParameterContext parameterContext, ExtensionContext extensionContext)
+  public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     log.debug("resolve(): parameterContext => " + ReflectionToStringBuilder.toString(parameterContext)
         + ", extensionContext => "
@@ -62,43 +60,43 @@ public class JUnit5ExtensionShowcase
   }
 
   @Override
-  public void beforeTestExecution(TestExtensionContext context) throws Exception {
+  public void beforeTestExecution(ExtensionContext context) throws Exception {
     log.debug("beforeTestExecution(): TestExecutionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void beforeEach(TestExtensionContext context) throws Exception {
+  public void beforeEach(ExtensionContext context) throws Exception {
     log.debug("beforeEach(): TestExecutionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void beforeAll(ContainerExtensionContext context) throws Exception {
+  public void beforeAll(ExtensionContext context) throws Exception {
     log.debug("beforeAll(): ContainerExtensionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void afterTestExecution(TestExtensionContext context) throws Exception {
+  public void afterTestExecution(ExtensionContext context) throws Exception {
     log.debug("afterTestExecution(): TestExecutionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void afterEach(TestExtensionContext context) throws Exception {
+  public void afterEach(ExtensionContext context) throws Exception {
     log.debug("afterEach(): TestExecutionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void afterAll(ContainerExtensionContext context) throws Exception {
+  public void afterAll(ExtensionContext context) throws Exception {
     log.debug("afterAll(): ContainerExtensionContext => "
         + ReflectionToStringBuilder.toString(context));
   }
 
   @Override
-  public void handleTestExecutionException(TestExtensionContext context, Throwable throwable) throws Throwable {
+  public void handleTestExecutionException(ExtensionContext context, Throwable throwable) throws Throwable {
     log.debug("handleTestExecutionException(): TestExecutionContext => "
         + ReflectionToStringBuilder.toString(context) + ", Throwable => "
         + ReflectionToStringBuilder.toString(throwable));

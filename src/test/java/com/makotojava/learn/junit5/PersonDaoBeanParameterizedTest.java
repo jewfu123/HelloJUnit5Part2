@@ -103,7 +103,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
 
   @ParameterizedTest(name = "@MethodSource: FindById(): Test# {index}: Person.toString() -> {0}")
   @DisplayName("FindById using MethodSource")
-  @MethodSource(names = { "personProvider", "additionalPersonProvider" })
+  @MethodSource(value = { "personProvider", "additionalPersonProvider" })
   public void findById(Person paramPerson) {
     assertNotNull(classUnderTest);
     long id = paramPerson.getId();
@@ -116,7 +116,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
 
   @ParameterizedTest(name = "@MethodSource: update(): Test# {index}: Person.toString() -> {0}")
   @DisplayName("Update using MethodSource")
-  @MethodSource(names = "personProvider")
+  @MethodSource(value = "personProvider")
   public void update(Person paramPerson) {
     assertNotNull(classUnderTest);
     Person personToUpdate = new Person(paramPerson.getLastName(), paramPerson.getFirstName(),
@@ -129,7 +129,7 @@ public class PersonDaoBeanParameterizedTest extends AbstractBaseTest {
 
   @ParameterizedTest(name = "@MethodSource: delete(): Test# {index}: Person.toString() -> {0}")
   @DisplayName("Delete using MethodSource")
-  @MethodSource(names = "personProvider")
+  @MethodSource(value = "personProvider")
   public void delete(Person paramPerson) {
     assertNotNull(classUnderTest);
     Person personDeleted = classUnderTest.delete(paramPerson);

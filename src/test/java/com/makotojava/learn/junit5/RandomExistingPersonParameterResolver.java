@@ -36,13 +36,13 @@ import com.makotojava.learn.junit.PersonTestEnum;
 public class RandomExistingPersonParameterResolver implements ParameterResolver {
 
   @Override
-  public boolean supports(ParameterContext parameterContext, ExtensionContext extensionContext)
+  public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     return parameterContext.getParameter().getType() == Person.class;
   }
 
   @Override
-  public Object resolve(ParameterContext parameterContext, ExtensionContext extensionContext)
+  public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
       throws ParameterResolutionException {
     Person ret = null;
     // Random number generator
