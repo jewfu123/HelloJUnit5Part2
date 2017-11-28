@@ -4,11 +4,11 @@
 # dependencies change in the POM or build.gradle.
 #
 #
-JUNIT_VERSION=1.0.0-RC3
+JUNIT_PLATFORM_VERSION=1.0.2
 CONSOLE_LAUNCHER_JAR_ROOT=./target/lib
 echo CONSOLE_LAUNCHER_JAR_ROOT=${CONSOLE_LAUNCHER_JAR_ROOT}
 #
-CONSOLE_LAUNCHER_JAR=junit-platform-console-standalone-${JUNIT_VERSION}.jar
+CONSOLE_LAUNCHER_JAR=junit-platform-console-standalone-${JUNIT_PLATFORM_VERSION}.jar
 echo CONSOLE_LAUNCHER_JAR=${CONSOLE_LAUNCHER_JAR}
 #
 LIB_ROOT=./target/lib
@@ -24,7 +24,7 @@ ${LIB_ROOT}/spring-jdbc-4.3.8.RELEASE.jar:\
 ${LIB_ROOT}/spring-tx-4.3.8.RELEASE.jar:\
 ${LIB_ROOT}/log4j-1.2.17.jar:\
 ${LIB_ROOT}/derby-10.13.1.1.jar:\
-${LIB_ROOT}/junit-platform-runner-${JUNIT_VERSION}.jar:\
+${LIB_ROOT}/junit-platform-runner-${JUNIT_PLATFORM_VERSION}.jar:\
 ${LIB_ROOT}/commons-lang3-3.5.jar
 echo DEPENDENT_JAR_CLASSPATH=${DEPENDENT_JAR_CLASSPATH}
 #
